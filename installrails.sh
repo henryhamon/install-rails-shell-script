@@ -40,13 +40,28 @@ then
 	gem install aws-s3 brcep brcpfcnpj brdata brdinheiro brhelper brnumeros brstring brtraducao capistrano fastercsv mongrel mechanize --no-rdoc --no-ri
 fi
 
-echo "Instalar Mysql 5? (y/n)"
-read mysql
-if [ $mysql = "y" ];
+echo "Instalar Mysql 5 ou CouchDB? [m]-MySql [c]-CouchDB [n]-Nenhum dos dois "
+read pdatabase
+if [ $pdatabase = "m" ];
 then
+    echo "Instalando o MySql"
 	apt-get install mysql-server-5.0
 	apt-get install libmysqlclient15-dev
 	gem install mysql
+elif [ $pdatabase = "c" ]; 
+then
+    echo "Instalando o CouchDB"
+    aptitude install automake autoconf libtool subversion-tools help2man spidermonkey-bin erlang erlang-manpages libicu38 libicu-dev libreadline5-dev checkinstall libmozjs-dev
+    adduser --no-create-home --disabled-password --disabled-login couchdb
+    wget http://linorg.usp.br/apache/couchdb/0.9.0/apache-couchdb-0.9.0.tar.gz
+    tar zxvf apache-couchdb-0.9.0.tar.gz
+    cd apache-couchdb-0.9.0
+    ./configure --bindir=/usr/bin --sbindir=/usr/sbin --localstatedir=/var --sysconfdir=/etc
+    make
+    make install
+    chown couchdb:couchdb -R /var/lib/couchdb /var/log/couchdb /usr/local/var/run/
+    ln -s /usr/local/etc/init.d/couchdb /etc/init.d/
+    update-rc.d couchdb defaults
 fi
 
 echo "Instalar ImageMagick? (y/n)"
