@@ -18,7 +18,7 @@ ln -s /usr/bin/ri1.8 /usr/bin/ri
 
 echo "Instalando RubyGems 1.3.1 a partir do Source Code....\n"
 
-curl http://de.mirror.rubyforge.org/rubygems/rubygems-1.3.1.tgz | tar -xzv
+curl http://production.cf.rubygems.org/rubygems/rubygems-1.3.7.tgz | tar -xzv
 cd rubygems-1.3.1 && ruby setup.rb install
 cd .. && rm -rf rubygems-1.3.1
 ln -s /usr/bin/gem1.8 /usr/local/bin/gem
